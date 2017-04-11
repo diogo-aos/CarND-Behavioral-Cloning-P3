@@ -1,0 +1,9 @@
+If model predictions are poor on both the training and validation set (for example, mean squared error is high on both), then this is evidence of underfitting. Possible solutions could be to
+
+increase the number of epochs
+add more convolutions to the network.
+When the model predicts well on the training set but poorly on the validation set (for example, low mean squared error for training set, high mean squared error for validation set), this is evidence of overfitting. If the model is overfitting, a few ideas could be to
+
+use dropout or pooling layers
+use fewer convolution or fewer fully connected layers
+collect more data or further augment the data set

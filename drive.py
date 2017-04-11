@@ -44,8 +44,17 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+set_speed = 18
 controller.set_desired(set_speed)
+
+
+def crop(im, crop_top=0.0, crop_bot=0.0):
+    if crop_top == 0.0 and crop_bot == 0.0:
+        return im
+    h, w, c = im.shape
+    top = int(h * crop_top)
+    bot = h - int(h * crop_bot)
+    return im[top:bot,...]
 
 
 @sio.on('telemetry')
@@ -61,6 +70,9 @@ def telemetry(sid, data):
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
+
+        image_array = crop(image_array, 0.35, 0.15)
+
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
